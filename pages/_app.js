@@ -10,7 +10,7 @@ class MyApp extends App {
     } = ctx;
     const I18Store = i18Store();
     await I18Store.setLanguage(locale || "en");
-    ctx.I18Store = I18Store;
+    ctx.I18Store = I18Store; // so that any of our pages will have access to the store instance.
     const pageProps = Component.getInitialProps
       ? await Component.getInitialProps(ctx)
       : {};
@@ -20,6 +20,11 @@ class MyApp extends App {
   constructor(props) {
     super(props);
     this.I18Store = i18Store(props.i18nState);
+    /*
+    by creating a constructor here it will do the following:
+    const I18nStore = new I18n(props.i18nState);
+    window["I18nStore"] = I18nStore;
+    */
   }
 
   render() {
